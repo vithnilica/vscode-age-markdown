@@ -1,0 +1,7 @@
+**
+!dist/extension.js
+!dist/cryptoWorker.js
+!package.json
+!README.md
+!LICENSE
+!CHANGELOG.md

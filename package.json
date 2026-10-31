@@ -1,0 +1,115 @@
+{
+  "name": "age-markdown",
+  "displayName": "Age Markdown",
+  "description": "Edit age-encrypted Markdown files directly in VS Code.",
+  "version": "0.1.0",
+  "publisher": "vithnilica",
+  "author": "Vít Hnilica",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vithnilica/vscode-age-markdown"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "age",
+    "encryption",
+    "markdown",
+    "notes"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onFileSystem:age-md"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": false
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "ageMarkdown.openEncryptedFile",
+        "title": "Open Encrypted File",
+        "category": "Age Markdown"
+      },
+      {
+        "command": "ageMarkdown.newEncryptedFile",
+        "title": "New Encrypted Markdown File",
+        "category": "Age Markdown"
+      },
+      {
+        "command": "ageMarkdown.lockAll",
+        "title": "Lock All",
+        "category": "Age Markdown"
+      },
+      {
+        "command": "ageMarkdown.forgetPasswords",
+        "title": "Forget Passwords",
+        "category": "Age Markdown"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "ageMarkdown.openEncryptedFile",
+          "when": "resourceScheme == file && resourceFilename =~ /\\.age$/",
+          "group": "navigation@9"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "ageMarkdown.openEncryptedFile",
+          "when": "resourceScheme == file && resourceFilename =~ /\\.md\\.age$/",
+          "group": "navigation"
+        }
+      ]
+    },
+    "languages": [
+      {
+        "id": "markdown",
+        "filenamePatterns": [
+          "*.md.age"
+        ]
+      }
+    ],
+    "configuration": {
+      "title": "Age Markdown",
+      "properties": {
+        "ageMarkdown.cachePassword": {
+          "type": "boolean",
+          "default": true,
+          "description": "Reuse the last successfully entered password for other encrypted files during this session. Passwords are kept in memory only and are never written to disk."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run build && vitest run",
+    "test:integration": "npm run build && node test-integration/run.mjs",
+    "package": "npm run build -- --production && vsce package",
+    "vscode:prepublish": "npm run build -- --production",
+    "test:backup-probe": "node test-integration/backup-probe.mjs"
+  },
+  "dependencies": {
+    "age-encryption": "^0.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "@types/vscode": "^1.90.0",
+    "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^4.1.0",
+    "esbuild": "^0.28.2",
+    "typescript": "^5.9.3",
+    "vitest": "^5.0.5"
+  }
+}

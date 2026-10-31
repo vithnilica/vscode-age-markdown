@@ -1,0 +1,10 @@
+{
+  "name": "backup-probe",
+  "publisher": "age-md-test",
+  "version": "0.0.1",
+  "description": "Test-only extension: observes what VS Code writes to disk for dirty custom-scheme documents.",
+  "license": "MIT",
+  "engines": { "vscode": "^1.90.0" },
+  "main": "./extension.js",
+  "activationEvents": ["onStartupFinished", "onFileSystem:probe-md"]
+}
